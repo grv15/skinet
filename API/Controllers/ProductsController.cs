@@ -38,6 +38,5 @@ namespace API.Controllers
         {
             return await _productRepository.GetProductTypesAsync();
         }
-
     }
 }
