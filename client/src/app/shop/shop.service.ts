@@ -1,10 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from '../shared/models/product';
 import { Pagination } from '../shared/models/pagination';
 import { Brand } from '../shared/models/brand';
 import { Type } from '../shared/models/type';
-import { HttpParams } from '@angular/common/http';
 import { ShopParams } from '../shared/models/shopParams';
 
 @Injectable({
@@ -17,8 +16,10 @@ export class ShopService {
 
   getProducts(shopParams: ShopParams) {
     let params = new HttpParams();
-    if (shopParams.brandId > 0)params = params.append('brandId', shopParams.brandId);
-    if (shopParams.typeId > 0)params = params.append('typeId', shopParams.typeId);
+    if (shopParams.brandId > 0)
+      params = params.append('brandId', shopParams.brandId);
+    if (shopParams.typeId > 0)
+      params = params.append('typeId', shopParams.typeId);
     params = params.append('sort', shopParams.sort);
     params = params.append('pageIndex', shopParams.pageNumber);
     params = params.append('pagrSize', shopParams.pageSize);
@@ -26,6 +27,9 @@ export class ShopService {
     return this.http.get<Pagination<Product[]>>(this.baseUrl + 'products', {
       params,
     });
+  }
+  getProduct(id: number) {
+    return this.http.get<Product>(this.baseUrl + 'products/' + id);
   }
   getTypes() {
     return this.http.get<Type[]>(this.baseUrl + 'products/Types');
